@@ -1,20 +1,30 @@
 var fs = require('fs'),
-	R = require('ramda');
+    R = require('ramda');
 
 var jsonData = require('./AllCards.json');
 
-var values = R.values(jsonData);
-var names = R.keys(jsonData);
+var properNames = R.keys(jsonData);
 
-names = R.map(x => x.toString().toLowerCase(), names);
-/*var values = [];
-for(var i = 0;i<names.length;i++){
-    values[i]=0;
-}
+/*
+var names = R.map(x => x.toString().toLowerCase(), properNames);
+names = R.map(x => R.replace(/[\/]/g, '%%', x.toString()), properNames);
+names = R.map(x => R.replace(/[\.]/g, '@@', x.toString()), properNames);
 */
-names = R.map(x => R.replace(/[\/]/g, '%%', x.toString()), names);
-names = R.map(x => R.replace(/[\.]/g, '@@', x.toString()), names);
-var zipped = R.zipObj(names,values);
+var keys = new Array(properNames.length);
+
+for (var i = 0; i < keys.length; i++) {
+    keys[i] = 'name';
+}
+
+console.log(properNames.length);
+console.log(keys.length);
+
+var obj1 = R.zipObj(keys,properNames);
+
+console.log( obj1 );
+
+//var zipped = R.zipObj(properNames, obj1);
+
 function parse(value) {
     try {
         return JSON.parse(value);
@@ -25,7 +35,7 @@ function parse(value) {
 
 //console.log(parse(JSON.stringify(zipped)));
 
-fs.writeFile('names.json', JSON.stringify(zipped));
+//fs.writeFile('properNames.json', JSON.stringify(zipped));
 console.log('done');
 
 
