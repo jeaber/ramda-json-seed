@@ -1,66 +1,31 @@
 var fs = require('fs'),
     R = require('ramda');
 
-var jsonData = require('./AllCards.json');
+var jsonData = require('./AllSets.json');
 
-var properNames = R.keys(jsonData);
+var newSets = R.map(edition => {
+    var cards = R.zipObj(R.map(x => x.name.toLowerCase(), jsonData[edition.code].cards), R.map(x => x, jsonData[edition.code].cards))
 
-/*
-var names = R.map(x => x.toString().toLowerCase(), properNames);
-names = R.map(x => R.replace(/[\/]/g, '%%', x.toString()), properNames);
-names = R.map(x => R.replace(/[\.]/g, '@@', x.toString()), properNames);
-*/
-var keys = new Array(properNames.length);
+    var keys = R.keys(cards);
+    var values = R.values(cards);
 
-for (var i = 0; i < keys.length; i++) {
-    keys[i] = 'name';
-}
+    var names = R.map(x => x.toString().toLowerCase(), keys);
+    names = R.map(x => R.replace(/[\/]/g, '%%', x.toString()), names);
+    names = R.map(x => R.replace(/[\.]/g, '@@', x.toString()), names);
 
-console.log(properNames.length);
-console.log(keys.length);
+    var cardsFormatted = R.zipObj(names, values);
+    edition.cards = cardsFormatted;
 
-var obj1 = R.zipObj(keys,properNames);
+    return edition;
 
-console.log( obj1 );
+}, jsonData)
 
-//var zipped = R.zipObj(properNames, obj1);
 
-function parse(value) {
-    try {
-        return JSON.parse(value);
-    } catch (e) {
-        return { error: e };
-    }
-}
-
-//console.log(parse(JSON.stringify(zipped)));
-
-//fs.writeFile('properNames.json', JSON.stringify(zipped));
+fs.writeFile('newSets.json', JSON.stringify(newSets));
 console.log('done');
 
-
-
-
-
-
-
-
-
-
-
-/*
-//var myJsonString = JSON.stringify(names);
-//fs.writeFile('names.json', myJsonString)
-var replace = x => {
-
-	return R.filter(obj => !Array.isArray(obj), x)
-}
-names = R.map(replace, jsonData);
-
-//console.log(names);
-
-
-
-fs.writeFile('names.json', names);
-//console.log('done');
+// editions mardcardinfo map
+/*keys.forEach(function(element) {
+    values.push(jsonData[element].magicCardsInfoCode)
+}, this);
 */
