@@ -29,7 +29,7 @@ function fetchMCInumber(cardIndex, printing) {
 }
 var keys = R.keys(cards);
 var values = R.values(cards);
-
+var valuesCopy = values;
 var printings = R.map(card => card.printings, values);
 for (var i = 0; i < printings.length; i++) { // i == card.name
     for (var k = 0; k < printings[i].length; k++) {
@@ -44,13 +44,13 @@ for (var i = 0; i < printings.length; i++) { // i == card.name
         }
     }
 }
-for (var i in values) {
-    values[i].imgSrc = printings[i]
+for (var i in valuesCopy) {
+    valuesCopy[i].imgSrc = printings[i]
 }
 // console.log(values)
 // var name = R.values(R.map(card => { return card.name }, jsonData));
 
-var cardsNew = R.zipObj(keys, values);
+var cardsNew = R.zipObj(keys, valuesCopy);
 
 fs.writeFile('cards-with-img.json', JSON.stringify(cardsNew));
 
