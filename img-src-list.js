@@ -49,7 +49,6 @@ var rejects = 0; var success = 0;
 for (var i = 0; i < printings.length; i++) { // i == card.name
     for (var k = 0; k < printings[i].length; k++) {
         var mci = fetchMCInumber(i, printings[i][k]);
-
         var set = fetchMagicInfoCode(printings[i][k]);
         if (i === 15033) {
             console.log(mci)
@@ -77,16 +76,17 @@ for (var i = 0; i < printings.length; i++) { // i == card.name
         }
     }
 }*/
-for (var i in values) {
-    values[i].imgSrc = imageSrc[i];
-    values[i].printings = printings[i];
+var urls = [];
+for (var i in imageSrc) {
+    imageSrc[i].forEach((url)=>{urls.push(url)});
+//    values[i].printings = printings[i];
 }
 console.log(values[15033])
 // console.log(values)
 // var name = R.values(R.map(card => { return card.name }, jsonData));
 
-var cardsNew = R.zipObj(keys, values);
+// var cardsNew = R.zipObj(keys, values);
 
-fs.writeFile('cards-with-img.json', JSON.stringify(cardsNew));
-
+fs.writeFile('imgsrc-list.json', urls);
+console.log(urls)
 console.log('done');
