@@ -78,8 +78,8 @@ for (var i = 0; i < printings.length; i++) { // i == card.name
 }*/
 var urls = [];
 for (var i in imageSrc) {
-    imageSrc[i].forEach((url)=>{urls.push(url)});
-//    values[i].printings = printings[i];
+    imageSrc[i].forEach((url) => { 'http://magiccards.info/scans/en/' + urls.push(url) + '.jpg' });
+    //    values[i].printings = printings[i];
 }
 console.log(values[15033])
 // console.log(values)
