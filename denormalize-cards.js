@@ -13,7 +13,7 @@ keys = R.map(x => R.replace(/[\.]/g, '@@', x.toString()), keys);
     fs.writeFile('card-'+ prop +'.json', JSON.stringify(object));
 }*/
 var keys = [];
-for (var i=0;i<Object.keys(jsonData).length;i++) {
+for (var i = 0; i < Object.keys(jsonData).length; i++) {
     keys.push(i)
 }
 var name = R.values(R.map(card => { return card.name }, jsonData));
@@ -24,6 +24,8 @@ var text = R.values(R.map(card => { return card.text }, jsonData));
 var power = R.values(R.map(card => { return card.power }, jsonData));
 var toughness = R.values(R.map(card => { return card.toughness }, jsonData));
 var cmc = R.values(R.map(card => { return card.cmc }, jsonData));
+var manaCost = R.values(R.map(card => { return card.manaCost }, jsonData));
+var loyalty = R.values(R.map(card => { return card.loyalty }, jsonData));
 /*console.log(name.length);
 console.log(type.length);
 console.log(types.length);
@@ -41,6 +43,8 @@ var textOb = R.zipObj(keys, text);
 var powerOb = R.zipObj(keys, power);
 var toughnessOb = R.zipObj(keys, toughness);
 var cmcOb = R.zipObj(keys, cmc);
+var manaCostOb = R.zipObj(keys, manaCost);
+var loyaltyOb = R.zipObj(keys, loyalty);
 
 var denormalized = {
     name: nameOb,
@@ -50,7 +54,10 @@ var denormalized = {
     text: textOb,
     power: powerOb,
     toughness: toughnessOb,
-    cmc: cmcOb
+    cmc: cmcOb,
+    manaCost: manaCostOb,
+    loyalty: loyaltyOb
+
 }
 
 fs.writeFile('denormalized-cards.json', JSON.stringify(denormalized));
