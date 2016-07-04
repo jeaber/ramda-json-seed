@@ -87,6 +87,6 @@ console.log(values[15033])
 
 // var cardsNew = R.zipObj(keys, values);
 
-fs.writeFile('imgsrc-list.json', urls);
+fs.writeFile('imgsrc-list.json', JSON.stringify(urls));
 console.log(urls)
 console.log('done');
